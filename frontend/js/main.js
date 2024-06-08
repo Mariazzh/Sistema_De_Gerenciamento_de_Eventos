@@ -89,15 +89,33 @@ if (registerForm) {
   if (guestForm) {
     guestForm.addEventListener('submit', addGuest);
   }
+// Função para editar um convidado
+  async function editGuest(id) {
+    const name = prompt('Novo nome:');
+    const email = prompt('Novo email:');
+    const eventField = prompt('Novo evento:');
+    try {
+      await axios.put(${baseURL}/guests/${id}, { name, email, event: eventField });
+      loadGuests();
+    } catch (error) {
+      console.error('Erro ao editar convidado:', error);
+    }
+  }
 
+  // Função para excluir um convidado
+  async function deleteGuest(id) {
+    try {
+      await axios.delete(${baseURL}/guests/${id});
+      loadGuests();
+    } catch (error) {
+      console.error('Erro ao excluir convidado:', error);
+    }
+  }
 
-
-
-
-
-
-
-
-
+  // Carregar convidados ao carregar a página de administração
+  const guestsTable = document.getElementById('guestsTable');
+  if (guestsTable) {
+    loadGuests();
+  }
   
 });
