@@ -47,6 +47,29 @@ if (registerForm) {
   if (loginForm) {
     loginForm.addEventListener('submit', loginUser);
   }
+// Função para carregar convidados
+  async function loadGuests() {
+    try {
+      const response = await axios.get(${baseURL}/guests);
+      const guests = response.data;
+      const guestsTable = document.getElementById('guestsTable');
+      guestsTable.innerHTML = '';
+      guests.forEach(guest => {
+        const row = `<tr>
+          <td>${guest.name}</td>
+          <td>${guest.email}</td>
+          <td>${guest.event}</td>
+          <td>
+            <button onclick="editGuest('${guest._id}')" class="btn btn-warning">Editar</button>
+            <button onclick="deleteGuest('${guest._id}')" class="btn btn-danger">Excluir</button>
+          </td>
+        </tr>`;
+        guestsTable.innerHTML += row;
+      });
+    } catch (error) {
+      console.error('Erro ao carregar convidados:', error);
+    }
+  }
 
 
 
