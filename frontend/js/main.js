@@ -70,7 +70,25 @@ if (registerForm) {
       console.error('Erro ao carregar convidados:', error);
     }
   }
+// Função para adicionar um novo convidado
+  async function addGuest(event) {
+    event.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const eventField = document.getElementById('event').value;
 
+    try {
+      await axios.post(${baseURL}/guests, { name, email, event: eventField });
+      loadGuests();
+    } catch (error) {
+      console.error('Erro ao adicionar convidado:', error);
+    }
+  }
+
+  const guestForm = document.getElementById('guestForm');
+  if (guestForm) {
+    guestForm.addEventListener('submit', addGuest);
+  }
 
 
 
